@@ -1,0 +1,15 @@
+[
+    {
+        "customerId": "99766-MCN-33655",
+        "name": "Marie-jeanne Mousley",
+        "email": "mmousley2t@quantcast.com",
+        "address": [
+            {
+                "zipcode": "59610",
+                "address": "7140 Hansons Plaza",
+                "city": "Grand Rapids",
+                "state": "MI"
+            }
+        ]
+    }
+]

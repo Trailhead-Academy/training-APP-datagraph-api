@@ -1,0 +1,214 @@
+#%RAML 1.0 Library
+#version: 1.0
+
+usage: |
+  library with data types used by the DataGraph Training Customer System API
+
+# resourceTypes for GET resource
+resourceTypes:
+  collection:
+    # All GET resources returning a collection of objects
+    get:
+      displayName: Get all <<resourcePathName>>
+      description: Return a collection of <<resourcePathName>>
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<get-response-type>>[]
+              example: <<example-get-response>>
+  single:
+    # All GET resources returning a single object
+    get:
+      displayName: Get <<resourcePathName>>
+      description: Return a <<resourcePathName>> using its identifier
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<get-response-type>>
+              example: <<example-get-response>>
+
+types:
+
+  # Error Response Message
+  ErrorMessageResponse:
+    properties:
+      message: string
+      identifier?: string
+
+  # Defines the type of ID that's gonna be used by all other objects
+  # I did that so I can change it in the future, if needed
+  Identifier:
+    type: string
+    description: |
+      unique ID of an object
+    displayName: Unique identifier (ID)
+    pattern: ^[0-9]{5}-[A-Z-a-z]{3}-[0-9]{5}
+    minLength: 15
+    maxLength: 18
+    example: 95697-DBN-61701
+
+  # Address dataType
+  Address:
+    type: object
+    description: |
+      address object
+    displayName: Address object  
+    properties:
+      addressId?:
+        type: Identifier
+        description: Address Id
+        displayName: Address unique identifier
+        example: 39636-DTP-40236
+      address:
+        type: string
+        description: Address
+        displayName: Address description
+        example: 7564 S. Street
+      city:
+        type: string
+        description: City
+        displayName: City
+        example: Dallas
+      state:
+        type: string
+        description: State
+        displayName: State
+        pattern: ^[A-Z-a-z]{2}
+        maxLength: 2
+        example: TX
+      zipcode:
+        type: string
+        description: Zip code
+        displayName: Zip code
+        example: "76907"  
+  
+  # Customer dataType
+  Customer:
+    type: object
+    description: |
+      customer object
+    displayName: Customer object  
+    properties:
+      customerId:
+        type: Identifier
+        description: Customer Id
+        displayName: Customer unique identifier
+        example: 95697-DBN-61701
+      name:
+        type: string
+        description: Customer name
+        displayName: Customer full name
+        example: |
+          Rusty Gates
+      email?: 
+        type: string
+        description: Customer e-mail
+        displayName: Customer e-mail
+        example: rusty@mycompany.com
+      address?:
+        type: Address[]
+        description: Customer address
+        displayName: All customer's address
+
+  # Order status
+  OrderStatus:
+    type: string
+    enum: [New, Processing, Completed, Canceled]
+  
+  # Order dataType
+  Order:
+    type: object
+    description: |
+      order object
+    displayName: Order object
+    properties:
+      orderId:
+        type: Identifier
+        description: Order Id
+        displayName: Order unique identifier
+        example: 72184-RHG-94560
+      customerId?:
+        type: string | nil
+        description: Customer Id
+        displayName: Customer identifier
+        example: 72184-RHG-94560
+      status?:
+        type: OrderStatus
+        description: Order status
+        displayName: Order status
+        default: New
+        example: Completed
+      items?:
+        type: Product[]
+        description: List of ordered products
+        displayName: List of ordered products
+      total?:
+        type: string
+        description: Order total
+
+  # Product category
+  Category:
+    type: string
+    enum: [Book, Drinkware, Apparel, Lifestyle, Baby, Office, Bags, Travel]
+  
+  # Product dataType
+  Product:
+    type: object
+    description: |
+      product object
+    displayName: Product object  
+    properties:
+      productId:
+        type: Identifier  
+        description: Product Id
+        displayName: Product unique identifier
+        example: 52576-SGZ-56606
+      productName?:
+        type: string
+        description: Product name
+        displayName: Name of the product
+        example: The Way of Kings
+      category?:
+        type: Category
+        description: Type of product
+        displayName: Product category
+        example: Book
+      price?:
+        type: string
+        description: Product price
+        displayName: Price of the product
+        example: "35.00"
+      quantity?:
+        type: integer
+        description: Number of ordered products
+        displayName: Total quantity of ordered products
+        example: 1  
+
+  # Shipment status
+  ShipmentStatus:
+    type: string
+    enum: [New, Pending, Preparing, Shipped, Delivered]
+
+  # Shipment dataType
+  Shipment:
+    type: object
+    description: |
+      shipment object
+    displayName: Shipment object
+    properties:
+      orderId: 
+        type: string
+        description: Order Id
+        displayName: Customer identifier
+      status?:
+        type: ShipmentStatus
+        description: Shipment status
+        displayName: Shipment status
+        example: Preparing
+      trackingNumber?:
+        type: string
+        description: Shipment tracking number
+        displayName: Shipment tracking number
+        example: 10N1SCZABRP287VDPAVT   

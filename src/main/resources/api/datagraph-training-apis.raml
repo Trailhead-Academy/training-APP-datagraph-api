@@ -1,0 +1,108 @@
+#%RAML 1.0
+version: 1.0
+title: DataGraph Training
+
+uses:
+  types: types/datagraph-training-library.raml
+
+/customers:
+  type:
+    types.collection:
+      get-response-type: types.Customer
+      example-get-response: !include responses/customer-collection.json
+  get:
+
+  /{customerId}:
+    uriParameters:
+      customerId:
+        type: string
+        description: Customer Id
+        displayName: Customer Id
+        example: 99766-MCN-33655
+    type:
+      types.single:
+        get-response-type: types.Customer
+        example-get-response: !include responses/customer.json
+    get:
+
+  /{customerId}/orders:
+    uriParameters:
+      customerId:
+        type: string
+        description: Customer Id
+        displayName: Customer Id
+        example: 99766-MCN-33655
+    type:
+      types.collection:
+        get-response-type: types.Order
+        example-get-response: !include responses/order-collection.json
+    get:
+
+/products:
+  type:
+    types.collection:
+      get-response-type: types.Product
+      example-get-response: !include responses/product-collection.json
+  get:
+
+  /{productId}:
+    uriParameters:
+      productId:
+        type: string
+        description: Product Id
+        displayName: Product Id
+        example: 33797-QVE-98274
+    type:
+      types.single:
+        get-response-type: types.Product
+        example-get-response: !include responses/product.json
+    get:
+
+/orders:
+  type:
+    types.collection:
+      get-response-type: types.Order
+      example-get-response: !include responses/order-collection.json
+  get:
+
+  /{orderId}:
+    uriParameters:
+      orderId:
+        type: string
+        description: Order Id
+        displayName: Order Id
+        example: 16534-VXA-07809
+    type:
+      types.single:
+        get-response-type: types.Order
+        example-get-response: !include responses/order.json
+    get:
+
+  /customer/{customerId}:
+    uriParameters:
+      customerId:
+        type: string
+        description: Customer Id
+        displayName: Customer Id
+        example: 99766-MCN-33655
+    type:
+      types.collection:
+        get-response-type: types.Order
+        example-get-response: !include responses/order-collection.json
+    get:
+
+/shipment:
+
+  /order/{orderId}:
+    uriParameters:
+      orderId:
+        type: string
+        description: Order Id
+        displayName: Order Id
+        example: 51350-GZH-5288
+    type:
+      types.single:
+        get-response-type: types.Shipment
+        example-get-response: !include responses/shipment.json
+    get:
+      
