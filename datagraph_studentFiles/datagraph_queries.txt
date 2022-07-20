@@ -1,0 +1,39 @@
+
+#### Query 1 ####
+{
+  customers{
+    customerId
+    name
+    email
+  }
+}
+
+#### Query 2 ####
+{
+  orders{
+    orderId
+    orderStatus
+  }
+}
+
+#### Query 3 ####
+{
+  ordersByOrderId(orderId: "51350-GZH-52880") {
+    orderId
+    status
+    customer {
+      customerId
+      name
+      email
+    }
+    items{
+      productId
+      productName
+      category
+    }
+		shipment{
+      shipmentStatus
+      trackingNumber
+    }
+  }
+}
