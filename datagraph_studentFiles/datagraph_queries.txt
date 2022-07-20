@@ -20,7 +20,7 @@
 {
   ordersByOrderId(orderId: "51350-GZH-52880") {
     orderId
-    status
+    orderStatus
     customer {
       customerId
       name
@@ -31,7 +31,7 @@
       productName
       category
     }
-		shipment{
+    shipment{
       shipmentStatus
       trackingNumber
     }
